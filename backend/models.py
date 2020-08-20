@@ -36,9 +36,6 @@ class Days(models.IntegerChoices):
 class Teacher(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField(max_length=10000)
-    schedule = ArrayField(
-        models.DateTimeField()
-    )
     subject = models.IntegerField(choices=Subject.choices)
     language = models.IntegerField(choices=Language.choices)
 
