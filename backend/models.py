@@ -34,7 +34,7 @@ class Days(models.IntegerChoices):
 
 
 class Teacher(models.Model):
-    User = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField(max_length=10000)
     schedule = ArrayField(
         models.DateTimeField()
@@ -44,12 +44,12 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-    User = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     edu_level = models.IntegerField(choices=EducationLevel.choices)
 
 
 class Choice(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='choices')
     subject = models.IntegerField(choices=Subject.choices, null=True)
     language = models.IntegerField(choices=Language.choices, null=True)
     difficulty = models.PositiveIntegerField(null=True)
