@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { loadStudentCourseList } from '../lookup/lookup';
+import { loadStudentCourseList } from '../api/backend';
 
 class CourseList extends React.Component {
     constructor(props) {

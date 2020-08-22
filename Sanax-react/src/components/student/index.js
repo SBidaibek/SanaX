@@ -2,7 +2,8 @@ import React from 'react';
 
 import Info from './Info';
 import CourseList from './CourseList';
-import ChoiceList from './ChoiceList';
+import ChoiceList from './Choice/List';
+import ChoiceForm from './Choice/Form';
 
 
 class Index extends React.Component {
@@ -17,10 +18,16 @@ class Index extends React.Component {
         return (
             <div>
                 <Info userId={this.state.userId} />
+                <br />
+
+                <ChoiceForm userId={this.state.userId} />
+                <br />
 
                 <CourseList userId={this.state.userId} />
+                <br />
 
                 <ChoiceList userId={this.state.userId} />
+                <br />
             </div>
         );
     }

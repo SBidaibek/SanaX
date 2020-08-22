@@ -36,7 +36,7 @@ class Choice extends React.Component {
     render() {
         return (
             <div>
-                <p>On choice {this.state.id} you chose {Subject.toExternal[this.state.subject]} in {Language.toExternal[this.state.language]}</p>
+                <p>On choice {this.state.id} you chose {this.state.subject ? Subject.toExternal[this.state.subject] : "Undefined Subject"} in {this.state.language ? Language.toExternal[this.state.language] : "Undefined Language"}</p>
             </div>
         );
     }

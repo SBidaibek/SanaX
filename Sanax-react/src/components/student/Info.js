@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { loadStudentInfo } from '../lookup/lookup';
+import { loadStudentInfo } from '../api/backend';
 
 const EduLevel = {
     toInternal: {
