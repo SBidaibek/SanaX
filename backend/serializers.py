@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Student, Course
+from .models import Student, Course, Choice
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -17,4 +17,10 @@ class StudentSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['name', 'description', 'progress']
+        fields = ['id', 'name', 'description', 'progress']
+
+
+class ChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
+        fields = ['id', 'subject', 'language', 'difficulty', 'preferredLowestPrice', 'preferredHighestPrice', 'preferPersonalLessons', 'preferredDuration']
