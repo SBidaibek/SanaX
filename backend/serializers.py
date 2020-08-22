@@ -17,6 +17,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
+            'id',
             'edu_level'
         )
 
@@ -25,6 +26,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = (
+            'id',
             'name',
             'description',
             'progress'
@@ -35,6 +37,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
         fields = (
+            'id',
             'subject',
             'language',
             'difficulty',
