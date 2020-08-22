@@ -59,7 +59,7 @@ class Choice(models.Model):
         constraints = [
             models.CheckConstraint(
                 check=models.Q(preferredLowestPrice__lte=models.F('preferredHighestPrice')),
-                name='preferredLowestifLowestThanHighest'
+                name='preferredLowestPriceisLowerThanHighest',
             )
         ]
 

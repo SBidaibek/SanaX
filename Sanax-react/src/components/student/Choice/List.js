@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { loadStudentChoiceList } from '../lookup/lookup';
+import { loadStudentChoiceList } from '../../api/backend';
 import Choice from './Choice';
 
 class ChoiceList extends React.Component {
