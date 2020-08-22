@@ -4,7 +4,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    _meta = None
 
 
 class Subject(models.IntegerChoices):
