@@ -85,3 +85,4 @@ def create_choice(request, student):
         return Response(data={"message": "The form has been filled out incorrectly"})
 
     return Response(data={"message": "Created choice"})
+
