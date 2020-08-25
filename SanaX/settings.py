@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'knox',
+    'storages',
     
     # internal
     'backend',
@@ -143,3 +144,10 @@ django_heroku.settings(locals())
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
+
+#AWS S3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = 'AKIAQEV24DNRZR4DIPHI'
+AWS_SECRET_ACCESS_KEY = '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'
+S3_BUCKET_NAME = 'sanax-dev-files'
+AWS_S3_REGION_NAME = 'eu-central-1'
