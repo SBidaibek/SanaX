@@ -128,6 +128,7 @@ class TestStudent(TestCase):
         data = {'id': self.student_user.id}
         response = c.post('/api/get_student_choice_list/', data)
 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         choice_data = response.data[0]
 
@@ -153,6 +154,7 @@ class TestStudent(TestCase):
         data = {'id': self.student_user.id}
         response = c.post('/api/get_student_choice_list/', data)
 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), self.COURSE_NUMBER)
 
         choice_ids = [choice_data['id'] for choice_data in response.data]
@@ -169,6 +171,7 @@ class TestStudent(TestCase):
         data = {'id': self.student_user.id}
         response = c.post('/api/get_student_course_list/', data)
 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         course_data = response.data[0]
 
@@ -190,8 +193,43 @@ class TestStudent(TestCase):
         data = {'id': self.student_user.id}
         response = c.post('/api/get_student_course_list/', data)
 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), self.COURSE_NUMBER)
 
         course_ids = [course_data['id'] for course_data in response.data]
         for course in self.courses:
             self.assertIn(course.id, course_ids)
+
+    @parameterized.expand([
+        (Subject.Mathematics, Language.Kazakh, 50,
+         100, 200, True, '02:30:15', status.HTTP_200_OK),
+        (Subject.Mathematics, Language.Kazakh, 50,
+         100, 200, True, 'two hours', status.HTTP_400_BAD_REQUEST),
+        (Subject.Mathematics, Language.Kazakh, 50,
+         500, 1, True, '02:30:15', status.HTTP_500_INTERNAL_SERVER_ERROR),
+    ])
+    def test_create_choice(self, subject, language, difficulty, lowest_price, highest_price, personal, duration, expected_status_code):
+        data = {
+            'id': self.student_user.id,
+            'subject': subject,
+            'language': language,
+            'difficulty': difficulty,
+            'preferredLowestPrice': lowest_price,
+            'preferredHighestPrice': highest_price,
+            'preferPersonalLessons': personal,
+            'preferredDuration': duration,
+        }
+
+        c = Client()
+        response = c.post('/api/create_choice/', data)
+
+        self.assertEqual(response.status_code, expected_status_code)
+
+        if response.status_code == status.HTTP_200_OK:
+            self.assertIn('id', response.data)
+            choice = Choice.objects.get(id=response.data['id'])
+
+            data.pop('id')
+            for key, val in data.items():
+                self.assertEqual(str(val), str(getattr(choice, key)),
+                                 'key={}'.format(key))

@@ -71,17 +71,18 @@ def get_student_choice_list(request, student):
 def create_choice(request, student):
     # TODO check authentication stuff
 
-    choice_data = request.data
+    choice_data = request.data.dict()
     choice_data.pop('id')
     choice_data['student_id'] = student.id
 
     serializer = ChoiceSerializer(data=choice_data)
+    choice = None
     if (serializer.is_valid()):
         try:
-            Choice.objects.create(**choice_data)
+            choice = Choice.objects.create(**choice_data)
         except Exception as e:
-            return Response(data={"message": "Something went wrong"})
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'Something went wrong'})
     else:
-        return Response(data={"message": "The form has been filled out incorrectly"})
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'The form has been filled out incorrectly'})
 
-    return Response(data={"message": "Created choice"})
+    return Response(data={'message': 'Created choice', 'id': choice.id})
