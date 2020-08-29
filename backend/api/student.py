@@ -71,7 +71,7 @@ def get_student_choice_list(request, student):
 def create_choice(request, student):
     # TODO check authentication stuff
 
-    choice_data = request.data.dict()
+    choice_data = request.data
     choice_data.pop('id')
     choice_data['student_id'] = student.id
 

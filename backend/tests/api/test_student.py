@@ -108,7 +108,8 @@ class TestStudent(TestCase):
 
         c = Client()
         data = {'id': self.student_user.id}
-        response = c.post('/api/get_student_info/', data)
+        response = c.post('/api/get_student_info/', data,
+                          content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -126,7 +127,8 @@ class TestStudent(TestCase):
 
         c = Client()
         data = {'id': self.student_user.id}
-        response = c.post('/api/get_student_choice_list/', data)
+        response = c.post('/api/get_student_choice_list/',
+                          data, content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
@@ -152,7 +154,8 @@ class TestStudent(TestCase):
     def test_get_student_choice_list_on_multiple_choices(self):
         c = Client()
         data = {'id': self.student_user.id}
-        response = c.post('/api/get_student_choice_list/', data)
+        response = c.post('/api/get_student_choice_list/',
+                          data, content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), self.COURSE_NUMBER)
@@ -169,7 +172,8 @@ class TestStudent(TestCase):
 
         c = Client()
         data = {'id': self.student_user.id}
-        response = c.post('/api/get_student_course_list/', data)
+        response = c.post('/api/get_student_course_list/',
+                          data, content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
@@ -191,7 +195,8 @@ class TestStudent(TestCase):
     def test_get_student_course_list_on_multiple_courses(self):
         c = Client()
         data = {'id': self.student_user.id}
-        response = c.post('/api/get_student_course_list/', data)
+        response = c.post('/api/get_student_course_list/',
+                          data, content_type='application/json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), self.COURSE_NUMBER)
@@ -221,7 +226,8 @@ class TestStudent(TestCase):
         }
 
         c = Client()
-        response = c.post('/api/create_choice/', data)
+        response = c.post('/api/create_choice/', data,
+                          content_type='application/json')
 
         self.assertEqual(response.status_code, expected_status_code)
 
