@@ -18,7 +18,7 @@ def student_api(func):
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        if user.student is None:
+        if not hasattr(user, 'student'):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         student = user.student
