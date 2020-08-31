@@ -6,7 +6,6 @@ from .api.student import get_student_info, get_student_course_list, get_student_
 from .views import UserAPIView, RegisterAPIView, LoginAPIView
 
 urlpatterns = [
-    # path('', include('knox.urls')),
     path('user/', UserAPIView.as_view()),
     path('register/', RegisterAPIView.as_view()),
     path('login/', LoginAPIView.as_view()),
