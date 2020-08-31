@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
+from rest_framework.decorators import api_view
 from backend.models import User, Student, Course, Choice
 from backend.serializers import StudentSerializer, CourseSerializer, ChoiceSerializer
 
@@ -12,7 +12,7 @@ def student_api(func):
 
         if id is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
         try:
             user = User.objects.get(id=id)
         except User.DoesNotExist:
@@ -24,7 +24,7 @@ def student_api(func):
         student = user.student
 
         return func(request, student)
-    
+
     return wrapper
 
 
@@ -42,7 +42,7 @@ def get_student_info(request, student):
 @student_api
 def get_student_course_list(request, student):
     # TODO check authentication stuff
-    
+
     choices = student.choices.all()
     courses = []
     for choice in choices:
@@ -58,7 +58,7 @@ def get_student_course_list(request, student):
 @student_api
 def get_student_choice_list(request, student):
     # TODO check authentication stuff
-    
+
     choices = student.choices.all()
 
     json_data = ChoiceSerializer(choices, many=True).data
@@ -70,19 +70,19 @@ def get_student_choice_list(request, student):
 @student_api
 def create_choice(request, student):
     # TODO check authentication stuff
-    
+
     choice_data = request.data
     choice_data.pop('id')
     choice_data['student_id'] = student.id
 
     serializer = ChoiceSerializer(data=choice_data)
+    choice = None
     if (serializer.is_valid()):
         try:
-            Choice.objects.create(**choice_data)
+            choice = Choice.objects.create(**choice_data)
         except Exception as e:
-            return Response(data={"message": "Something went wrong"})
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'Something went wrong'})
     else:
-        return Response(data={"message": "The form has been filled out incorrectly"})
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'The form has been filled out incorrectly'})
 
-    return Response(data={"message": "Created choice"})
-
+    return Response(data={'message': 'Created choice', 'id': choice.id})

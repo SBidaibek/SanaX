@@ -39,13 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # third-party
     'corsheaders',
     'rest_framework',
     'knox',
     'storages',
-    
+
     # internal
     'backend',
 ]
@@ -145,6 +145,6 @@ django_heroku.settings(locals())
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
-#AWS S3
+# AWS S3
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_S3_REGION_NAME = 'eu-central-1'
